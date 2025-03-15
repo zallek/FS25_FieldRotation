@@ -1,0 +1,30 @@
+<modDesc descVersion="95">
+    <author>zallek</author>
+    <version>1.0.0.0</version>
+    <title>
+        <en>Crop Rotation</en>
+        <fr>Rotation de culture</fr>
+    </title>
+    <description>
+        <en>
+            <![CDATA[ 
+                Crop Rotation is a mod Farming Simulator 25 that allows you to rotate your crops.
+            ]]>
+        </en>
+        <fr>
+            <![CDATA[ 
+                Rotation de culture est un mod Farming Simulator 25 qui permet de faire tourner vos cultures.
+            ]]>
+        </fr>
+    </description>
+    <iconFilename>icon_CropRotation.dds</iconFilename>
+    <multiplayer supported="false" />
+
+    <l10n filenamePrefix="l10n/l10n" />
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/CropRotationYield.lua" />
+        <sourceFile filename="scripts/field/FieldHistory.lua" />
+        <sourceFile filename="scripts/field/FieldState.lua" />
+    </extraSourceFiles>
+</modDesc>
