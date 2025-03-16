@@ -1,4 +1,5 @@
-UNKNOWN_FRUIT_TYPE_INDEX = 0
+FruitType = {}
+FruitType.UNKNOWN = 0
 
 SUNFLOWER_FRUIT_TYPE = {
     index = 6,

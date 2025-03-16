@@ -62,7 +62,10 @@ function CRY_FieldHistory:update(fieldState)
         end
 
         if #self.historyEntries < 24 then
-            self:generateHistory(2)
+            local backwardHistory = self:generateHistory(self.historyEntries[1], 2)
+            for _, entry in ipairs(backwardHistory) do
+                self:preppendHistoryEntry(entry.monotonicDay, entry.dayTime, entry.fruitTypeIndex, entry.growthState, true)
+            end
         end
     end
 end
@@ -90,34 +93,102 @@ end
 function CRY_FieldHistory:getLastFruitTypes(nbFruitTypes)
 end
 
-function CRY_FieldHistory:generateHistory(nbFruitTypes)
-    local firstEntry = self.historyEntries[1]
-    if not firstEntry then return end
-
-    -- local fruitTypes = g_fruitTypeManager:getFruitTypes()
-    -- fruitType = fruitTypes[math.random(1, #fruitTypes)]
-
-    local backwardHistory = self:generateBackwardHistoryEntry(firstEntry)
-    for _, entry in ipairs(backwardHistory) do
-        self:preppendHistoryEntry(entry.monotonicDay, entry.dayTime, entry.fruitTypeIndex, entry.growthState, true)
-    end
-end
-
-function CRY_FieldHistory:generateBackwardHistoryEntry(untilEntry)
+function CRY_FieldHistory:generateHistory(toEntry, additionalFruitTypes, allowFallow)
     -- Generate realistic history based on fruit types seasonal growth data
     -- Useful for testing and for initializing the gameplay for players when the mod is newly installed
+
+    if not toEntry then
+        return {}
+    end
+
+    local entries = self:generateBackwardHistoryOfFruitEntry(toEntry)
+    print("entries", #entries)
+
+    local fruitTypesIndices = {}
+    if allowFallow then
+        table.insert(fruitTypesIndices, 0)
+    end
+    for _, fruitType in ipairs(g_fruitTypeManager:getFruitTypes()) do
+        table.insert(fruitTypesIndices, fruitType.index)
+    end
+
+    for i = 1, additionalFruitTypes do
+        local fruitTypeIndex = fruitTypesIndices[math.random(1, #fruitTypesIndices)]
+        local fruitTypeEntries = self:generateBackwardWithFruitType(entries[#entries] or toEntry, fruitTypeIndex)
+        print("fruitTypeEntries", #fruitTypeEntries)
+        for _, entry in ipairs(fruitTypeEntries) do
+            table.insert(entries, entry)
+        end
+    end
+
+    return entries
+end
+
+function CRY_FieldHistory:generateBackwardWithFruitType(entry, fruitTypeIndex)
     local entries = {}
 
-    local fruitType = g_fruitTypeManager:getFruitTypeByIndex(untilEntry.fruitTypeIndex)
+    local fruitType = g_fruitTypeManager:getFruitTypeByIndex(fruitTypeIndex)
+    if fruitType == nil then -- TODO: handle FALLOW -- TODO Handle GRASS
+        return entries
+    end
+
+    local currentDay = entry.monotonicDay
+    local growthData = fruitType.growthDataSeasonal
+
+    -- Generate fallow history entries
+    while currentDay > 1 do
+        -- Move backwards in time
+        currentDay = currentDay - 1
+
+        local period = g_currentMission.environment:getPeriodFromDay(currentDay)
+        local periodData = growthData.periods[period]
+        if periodData.isHarvestable then
+            break
+        end
+
+        table.insert(entries, {
+            monotonicDay = currentDay,
+            dayTime = 0,
+            growthState = 0,
+            fruitType = FruitType.UNKNOWN,
+        })
+    end
+
+    if currentDay == 1 then
+        return entries
+    end
+
+    -- Generate an harvestable entry
+    table.insert(entries, {
+        monotonicDay = currentDay,
+        dayTime = 0,
+        growthState = getHighestKey(fruitType.harvestReadyTransitions),
+        fruitType = fruitTypeIndex,
+    })
+
+    -- Generate the backward history of the harvestable entry
+    local fruitEntries = self:generateBackwardHistoryOfFruitEntry(entries[#entries])
+    for _, entry in ipairs(fruitEntries) do
+        table.insert(entries, entry)
+    end
+
+    return entries
+end
+
+function CRY_FieldHistory:generateBackwardHistoryOfFruitEntry(entry)
+    -- Generate realistic backward history of a fruit entry. Stop at the first growth state
+    local entries = {}
+
+    local fruitType = g_fruitTypeManager:getFruitTypeByIndex(entry.fruitType)
     if fruitType == nil then
         return entries
     end
 
     local growthData = fruitType.growthDataSeasonal
-    local currentDay = untilEntry.monotonicDay
-    local currentGrowthState = untilEntry.growthState
+    local currentDay = entry.monotonicDay
+    local currentGrowthState = entry.growthState
 
-    -- Generate entries from the current state backwards
+    -- Generate growing history entries from the current state backwards
     while currentDay > 1 and currentGrowthState > 1 do
         -- Move backwards in time
         currentDay = currentDay - 1
@@ -164,12 +235,12 @@ function CRY_FieldHistory:generateBackwardHistoryEntry(untilEntry)
     return entries
 end
 
-
---[[ 
-monotonicDay | period | growthState
-11 | 11 | 10
-10 | 10 | 10
-9 | 9 | 8  (isHarvestable)
-8 | 8 | 7 
-7 | 7 | 6
- ]]
+function getHighestKey(t)
+    local highest = nil
+    for k, _ in pairs(t) do
+        if type(k) == "number" and (highest == nil or k > highest) then
+            highest = k
+        end
+    end
+    return highest
+end
