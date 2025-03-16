@@ -3,9 +3,7 @@ FruitType.UNKNOWN = 0
 
 SUNFLOWER_FRUIT_TYPE = {
     index = 6,
-    getIsCut = function(self, growthState)
-        return growthState == 10
-    end,
+    cutStates = { [10] = true },
     growthDataSeasonal = {
         periods = {
             [1] = {
