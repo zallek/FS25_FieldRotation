@@ -17,7 +17,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfHarvestedFruitEntry()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = { {
         monotonicDay = 10,
@@ -86,7 +86,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfHarvestedTodayFruitEntry(
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = { {
         monotonicDay = 9,
@@ -145,7 +145,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfHarvableFruitEntry()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = { {
         monotonicDay = 8,
@@ -199,7 +199,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfGrowingFruitEntry()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = { {
         monotonicDay = 4,
@@ -233,7 +233,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfPlantedFruitEntry()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = { {
         monotonicDay = 2,
@@ -252,7 +252,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfFirstDayFruitEntry()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryOfFruitEntry(entry)
     local expected = {}
     luaunit.assertEquals(result, expected)
@@ -266,7 +266,7 @@ function TestFieldHistory:testGenerateBackwardHistoryWithFruitTypes()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryWithFruitTypes(entry, { SUNFLOWER_FRUIT_TYPE.index, SUNFLOWER_FRUIT_TYPE.index })
     local expected = { {
         monotonicDay = 14,
@@ -366,7 +366,7 @@ function TestFieldHistory:testGenerateBackwardHistoryWithZeroFruitTypes()
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     }
 
-    local fieldHistory = CRY_FieldHistory.new()
+    local fieldHistory = FR_FieldHistory.new()
     local result = fieldHistory:generateBackwardHistoryWithFruitTypes(entry, {})
     local expected = { {
         monotonicDay = 14,
