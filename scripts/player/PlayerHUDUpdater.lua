@@ -19,20 +19,33 @@ function FR_PlayerHUDUpdater:fieldAddField(fieldInfo, box)
 
     for yearsOld, fruitTypeEntries in pairs(harvestedEntriesByYear) do
         for fruitTypeIndex, entries in pairs(fruitTypeEntries) do
-            local rotationMultiplier = entries[1]:getRotationMultiplier(fieldInfo.fruitTypeIndex)
-            local fruitTypeLabel = entries[1]:getFruitType().fillType.title
-            local countLabel = #entries > 1 and " (x" .. #entries .. ")" or ""
             local key = yearsOld == 0 and g_i18n:getText("ui_field_rotation_one_year_harvest") or g_i18n:getText("ui_field_rotation_two_year_harvest", yearsOld)
-            box:addLine(key, fruitTypeLabel .. countLabel .. " (" .. string.format("%+.1f", (rotationMultiplier * 100) * #entries) .. "%)")
+
+            local fruitTypeLabel = entries[1]:getFruitType().fillType.title
+            local countText = #entries > 1 and " (x" .. #entries .. ")" or ""
+
+            local rotationMultiplierText = ""
+            if fieldInfo.fruitTypeIndex ~= FruitType.UNKNOWN then
+                local rotationMultiplier = entries[1]:getRotationMultiplier(fieldInfo.fruitTypeIndex)
+                rotationMultiplierText = " (" .. string.format("%+.1f", (rotationMultiplier * 100) * #entries) .. "%)"
+            end
+            box:addLine(key, fruitTypeLabel .. countText .. rotationMultiplierText)
         end
     end
 
-    if fruit ~= nil and (fruit:getIsGrowing(growthState) or fruit:getIsPreparable(growthState) or fruit:getIsHarvestable(growthState)) then
+    if fruit ~= nil and not fruit:getIsCut(growthState) then
         -- Display field rotation factor
         local fieldRotationMultiplier = fieldInfo:getFieldRotationMultiplier()
         box:addLine(g_i18n:getText("ui_field_rotation_factor"), string.format("%+.1f", fieldRotationMultiplier * 100) .. "%")
     else
-    -- Recommend fruit to plant
+        -- Rotation recommendations
+        -- Display up to 3 best next rotations on a single line
+        local bestNextRotations = fieldInfo:getBestNextRotations()
+        for i = 1, math.min(3, #bestNextRotations) do
+            local fruitTypeLabel = g_fruitTypeManager:getFruitTypeByIndex(bestNextRotations[i].fruitTypeIndex).fillType.title
+            local recommendation = fruitTypeLabel .. " (" .. string.format("%+.1f", bestNextRotations[i].rotationMultiplier * 100) .. "%)"
+            box:addLine(g_i18n:getText("ui_field_rotation_next_recommendation") .. " " .. i, recommendation)
+        end
     end
 end
 
