@@ -4,7 +4,7 @@
 		<!-- UI -->
 		<text name="ui_field_rotation_one_year_harvest" text="Harvest (1 year)" />
 		<text name="ui_field_rotation_two_year_harvest" text="Harvest (2 years)" />
-		<text name="ui_field_rotation_factor" text="Rotation bonus" />
+		<text name="ui_field_rotation_multiplier" text="Rotation bonus" />
 		<text name="ui_field_rotation_next_recommendation" text="Recommendation" />
 	</texts>
 </l10n>
