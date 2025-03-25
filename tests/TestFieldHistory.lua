@@ -7,8 +7,49 @@ require("./mocks/FruitTypes")
 require("./mocks/Globals")
 -- Load the module
 require("FieldHistory")
+require("FieldHistoryEntry")
 
 TestFieldHistory = {} -- Create a test suite
+function TestFieldHistory:testGetLatestHaverstedEntries()
+    g_currentMission.environment.currentMonotonicDay = 30
+
+    local fieldHistory = FR_FieldHistory.new()
+    local harvestedEntryDay6 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 6,
+        growthState = 10,
+        fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
+    })
+    local harvestedEntryDay15 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 15,
+        growthState = 10,
+        fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
+    })
+    local harvestedEntryDay20 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 20,
+        growthState = 10,
+        fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
+    })
+    local fallowEntryDay20 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 20,
+        growthState = 0,
+        fruitTypeIndex = 0,
+    })
+    local harvestedEntryDay28 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 28,
+        growthState = 10,
+        fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
+    })
+    fieldHistory:appendHistoryEntry(harvestedEntryDay6)
+    fieldHistory:appendHistoryEntry(harvestedEntryDay15)
+    fieldHistory:appendHistoryEntry(harvestedEntryDay20)
+    fieldHistory:appendHistoryEntry(fallowEntryDay20)
+    fieldHistory:appendHistoryEntry(harvestedEntryDay28)
+
+    local result = fieldHistory:getLatestHaverstedEntries(24)
+    local expected = { harvestedEntryDay28, harvestedEntryDay20, harvestedEntryDay15 }
+    luaunit.assertEquals(result, expected)
+end
+
 function TestFieldHistory:testGenerateBackwardHistoryOfHarvestedFruitEntry()
     local entry = {
         monotonicDay = 11,
@@ -225,7 +266,7 @@ function TestFieldHistory:testGenerateBackwardHistoryOfGrowingFruitEntry()
     luaunit.assertEquals(result, expected)
 end
 
-function TestFieldHistory:testGenerateBackwardHistoryOfPlantedFruitEntry()
+function TestFieldHistory:testGenerateBackwardHistoryOfSeededFruitEntry()
     local entry = {
         monotonicDay = 2,
         dayTime = 1,

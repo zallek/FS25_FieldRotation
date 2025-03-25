@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+	<texts>
+		<!-- UI -->
+		<text name="ui_field_rotation_one_year_harvest" text="Harvest (1 year)" />
+		<text name="ui_field_rotation_two_year_harvest" text="Harvest (2 years)" />
+		<text name="ui_field_rotation_factor" text="Rotation bonus" />
+	</texts>
+</l10n>

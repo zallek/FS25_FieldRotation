@@ -12,7 +12,7 @@ local fieldCropRotationSystemClass = Class(FR_FieldRotationSystem)
 function FR_FieldRotationSystem.new(o)
     local class = o or fieldCropRotationSystemClass
     local instance = setmetatable({}, class)
-    instance.rotationFactors = {}
+    instance.rotationMultipliers = {}
     return instance
 end
 
@@ -20,17 +20,26 @@ function FR_FieldRotationSystem:registerXmlSchema()
     local xmlSchema = FieldRotation.xmlSchema
     xmlSchema:register(XMLValueType.STRING, FR_FieldRotationSystem.SETTINGS_ROTATION_FULL_PATH .. "#fruitType", "Name of the fruit type", nil, false)
     xmlSchema:register(XMLValueType.STRING, FR_FieldRotationSystem.SETTINGS_ROTATION_PREDECESSOR_FULL_PATH .. "#fruitType", "Name of the predecessor fruit type", nil, false)
-    xmlSchema:register(XMLValueType.FLOAT, FR_FieldRotationSystem.SETTINGS_ROTATION_PREDECESSOR_FULL_PATH .. "#factor", "Factor of the predecessor fruit type", nil, false)
+    xmlSchema:register(XMLValueType.FLOAT, FR_FieldRotationSystem.SETTINGS_ROTATION_PREDECESSOR_FULL_PATH .. "#multiplier", "Yield multiplier of the predecessor fruit type", nil, false)
 end
 
 function FR_FieldRotationSystem:loadFromXMLFile(xmlFile)
     for _, entryKey in xmlFile:iterator(FR_FieldRotationSystem.SETTINGS_ROTATION_PATH) do
         local fruitTypeName = xmlFile:getValue(entryKey .. "#fruitType")
-        self.rotationFactors[fruitTypeName] = {}
+        local fruitTypeIndex = g_fruitTypeManager:getFruitTypeByName(fruitTypeName).index
+        self.rotationMultipliers[fruitTypeIndex] = {}
         for _, predecessorEntryKey in xmlFile:iterator(entryKey .. FR_FieldRotationSystem.SETTINGS_ROTATION_PREDECESSOR_PATH) do
             local predecessorFruitTypeName = xmlFile:getValue(predecessorEntryKey .. "#fruitType")
-            local predecessorFactor = xmlFile:getValue(predecessorEntryKey .. "#factor")
-            self.rotationFactors[fruitTypeName][predecessorFruitTypeName] = predecessorFactor
+            local predecessorFruitTypeIndex = g_fruitTypeManager:getFruitTypeByName(predecessorFruitTypeName).index
+            local predecessorMultiplier = xmlFile:getValue(predecessorEntryKey .. "#multiplier")
+            self.rotationMultipliers[fruitTypeIndex][predecessorFruitTypeIndex] = predecessorMultiplier
         end
     end
+end
+
+function FR_FieldRotationSystem:getRotationMultiplier(fruitTypeIndex, predecessorFruitTypeIndex)
+    if self.rotationMultipliers[fruitTypeIndex] == nil then
+        return 0
+    end
+    return self.rotationMultipliers[fruitTypeIndex][predecessorFruitTypeIndex] or 0
 end
