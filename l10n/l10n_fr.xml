@@ -2,12 +2,10 @@
 <l10n>
 	<texts>
 		<!-- UI -->
-		<text name="ui_field_previous_harvests_title" text="Récoltes précédentes" />
-		<text name="ui_field_previous_harvests_one_year" text="(cette année)" />
-		<text name="ui_field_previous_harvests_two_year" text="(année dernière)" />
-
 		<text name="ui_field_rotation_title" text="Rotation" />
-		<text name="ui_field_rotation_multiplier" text="Bonus de rotation" />
-		<text name="ui_field_rotation_recommendation" text="Rotation (recommandations)" />
+		<text name="ui_field_rotation_harvest_this_year" text="(cette année)" />
+		<text name="ui_field_rotation_harvest_last_year" text="(année dernière)" />
+		<text name="ui_field_rotation_bonus" text="Bonus de rotation" />
+		<text name="ui_field_rotation_recommendation_title" text="Recommandations" />
 	</texts>
 </l10n>
