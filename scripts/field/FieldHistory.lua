@@ -71,6 +71,7 @@ end
 
 function FR_FieldHistory:getLatestHaverstedEntries(maxDaysAgo)
     local entries = {}
+    local lastHarvestedEntryIndex = nil
     for i = #self.historyEntries, 1, -1 do
         local entry = self.historyEntries[i]
         local daysAgo = entry:getDaysAgo()
@@ -78,7 +79,12 @@ function FR_FieldHistory:getLatestHaverstedEntries(maxDaysAgo)
             break
         end
         if entry:isHaversted() then
-            table.insert(entries, entry)
+            lastHarvestedEntryIndex = i
+        else
+            -- Insert the last consecutive harvested entry
+            if lastHarvestedEntryIndex ~= nil and lastHarvestedEntryIndex == i + 1 then
+                table.insert(entries, self.historyEntries[lastHarvestedEntryIndex])
+            end
         end
     end
     return entries

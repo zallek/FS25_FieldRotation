@@ -14,14 +14,14 @@ function TestFieldHistory:testGetLatestHaverstedEntries()
     g_currentMission.environment.currentMonotonicDay = 30
 
     local fieldHistory = FR_FieldHistory.new()
-    local harvestedEntryDay6 = FR_FieldHistoryEntry.new():init({
-        monotonicDay = 6,
+    local harvestedEntryDay10 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 10,
         growthState = 10,
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     })
-    local harvestedEntryDay15 = FR_FieldHistoryEntry.new():init({
-        monotonicDay = 15,
-        growthState = 10,
+    local harvestableEntryDay20 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 20,
+        growthState = 8,
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     })
     local harvestedEntryDay20 = FR_FieldHistoryEntry.new():init({
@@ -29,24 +29,24 @@ function TestFieldHistory:testGetLatestHaverstedEntries()
         growthState = 10,
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     })
-    local fallowEntryDay20 = FR_FieldHistoryEntry.new():init({
-        monotonicDay = 20,
-        growthState = 0,
-        fruitTypeIndex = 0,
+    local harvestableEntryDay30 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 30,
+        growthState = 8,
+        fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     })
-    local harvestedEntryDay28 = FR_FieldHistoryEntry.new():init({
-        monotonicDay = 28,
+    local harvestedEntryDay30 = FR_FieldHistoryEntry.new():init({
+        monotonicDay = 30,
         growthState = 10,
         fruitTypeIndex = SUNFLOWER_FRUIT_TYPE.index,
     })
-    fieldHistory:appendHistoryEntry(harvestedEntryDay6)
-    fieldHistory:appendHistoryEntry(harvestedEntryDay15)
+    fieldHistory:appendHistoryEntry(harvestedEntryDay10)
+    fieldHistory:appendHistoryEntry(harvestableEntryDay20)
     fieldHistory:appendHistoryEntry(harvestedEntryDay20)
-    fieldHistory:appendHistoryEntry(fallowEntryDay20)
-    fieldHistory:appendHistoryEntry(harvestedEntryDay28)
+    fieldHistory:appendHistoryEntry(harvestableEntryDay30)
+    fieldHistory:appendHistoryEntry(harvestedEntryDay30)
 
     local result = fieldHistory:getLatestHaverstedEntries(24)
-    local expected = { harvestedEntryDay28, harvestedEntryDay20, harvestedEntryDay15 }
+    local expected = { harvestedEntryDay30, harvestedEntryDay20 }
     luaunit.assertEquals(result, expected)
 end
 
