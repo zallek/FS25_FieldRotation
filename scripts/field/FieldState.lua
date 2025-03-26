@@ -60,6 +60,7 @@ end
 FieldState.saveToXMLFile = Utils.appendedFunction(FieldState.saveToXMLFile, FR_FieldState.saveToXMLFile)
 
 function FR_FieldState:computeFieldRotationMultiplierForFruitType(fruitTypeIndex)
+    -- Value between -1 and 1 (0 = no rotation bonus)
     local latestHaverstedEntries = self.history:getLatestHaverstedEntries(24)
     local multiplier = 0
     for _, harvestedEntry in pairs(latestHaverstedEntries) do
@@ -109,10 +110,9 @@ end
 
 FieldState.getBestNextRotations = FR_FieldState.getBestNextRotations
 
-
---[[ function FR_FieldState:getHarvestScaleMultiplier(superFunc, ...)
+function FR_FieldState:getHarvestScaleMultiplier(superFunc, ...)
     local harvestScaleMultiplier = superFunc(self, ...)
-    return harvestScaleMultiplier * self:getCropRotationFactor()
+    return harvestScaleMultiplier * self:getFieldRotationFactor()
 end
 
-FieldState.getHarvestScaleMultiplier = Utils.overwrittenFunction(FieldState.getHarvestScaleMultiplier, FR_FieldState.getHarvestScaleMultiplier) ]]
+FieldState.getHarvestScaleMultiplier = Utils.overwrittenFunction(FieldState.getHarvestScaleMultiplier, FR_FieldState.getHarvestScaleMultiplier)

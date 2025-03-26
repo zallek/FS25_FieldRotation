@@ -28,6 +28,7 @@
         <sourceFile filename="scripts/field/FieldRotationSystem.lua" />
         <sourceFile filename="scripts/field/FieldState.lua" />
         <sourceFile filename="scripts/player/PlayerHUDUpdater.lua" />
+        <sourceFile filename="scripts/utils/FSDensityMapUtil.lua" />
         <sourceFile filename="scripts/FieldRotation.lua" />
     </extraSourceFiles>
 </modDesc>
