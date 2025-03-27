@@ -17,11 +17,17 @@ A Farming Simulator 25 mod that implements a comprehensive field rotation system
 
 ## Crop Rotation System
 
-The mod implements a sophisticated crop rotation system where the yield of each field is influenced by previously harvested crops. This creates a more realistic and strategic farming experience.
+The mod implements a sophisticated crop rotation system that affects field yields based on previously harvested crops. This creates a more realistic and strategic farming experience.
+
+### How It Works
+- Each field's yield is influenced by crops harvested in the past 2 years
+- Crops harvested within the last 12 months have full effect on the yield multiplier
+- Crops harvested between 12-24 months ago have half the effect on the yield multiplier
+- Monoculture (growing the same crop repeatedly) typically results in lower yields
 
 ### Rotation Multipliers
 
-| Predecessor ↓ / Following → | WHEAT  | BARLEY | OAT  | CANOLA  | MAIZE  | SOYBEAN  | SUNFLOWER | POTATO  | SUGARBEET | COTTON  | SORGHUM  | CARROT  | BEETROOT  | PARSNIP  |
+| Previous ↓ / Current → | WHEAT  | BARLEY | OAT  | CANOLA  | MAIZE  | SOYBEAN  | SUNFLOWER | POTATO  | SUGARBEET | COTTON  | SORGHUM  | CARROT  | BEETROOT  | PARSNIP  |
 |-----------------------------|--------|--------|------|---------|--------|----------|-----------|---------|-----------|---------|----------|---------|-----------|----------|
 | WHEAT                       | -20%   | -20%   | -20% | +10%    | -20%   | +10%     | +10%      | +10%    | +10%      | +10%    | -20%     | +10%    | +10%      | +10%     |
 | BARLEY                      | -20%   | -20%   | -20% | +10%    | -20%   | +10%     | +10%      | +10%    | +10%      | -       | -20%     | +10%    | +10%      | +10%     |
@@ -35,10 +41,21 @@ The mod implements a sophisticated crop rotation system where the yield of each 
 | GRASS                       | +10%   | +10%   | +10% | -       | +10%   | -        | -         | +10%    | +10%      | -       | +10%     | +10%    | +10%      | +10%     |
 | COTTON                      | -      | -      | -    | -10%    | -      | -        | -10%      | -       | -         | -20%    | -        | -       | -         | -        |
 | SORGHUM                     | -      | -      | -    | -       | -20%   | -        | -         | -       | -         | -       | -20%     | -       | -         | -        |
-| MEADOW                      | +10%   | +10%   | +10% | -       | +10%   | -        | -         | +10%    | +10%      | -       | +10%     | +10%    | +10%      | +10%     |
 | CARROT                      | -      | -      | -    | -       | -      | -        | -         | -10%    | -10%      | -       | -        | -20%    | -10%      | -20%     |
 | BEETROOT                    | -      | -      | -    | -       | -      | -        | -         | -10%    | -10%      | -       | -        | -10%    | -20%      | -10%     |
 | PARSNIP                     | -      | -      | -    | -       | -      | -        | -         | -10%    | -10%      | -       | -        | -20%    | -10%      | -20%     |
+
+### Yield Calculation Examples
+
+Example 1: Growing **OAT**
+- Current year: SOYBEAN (+20% full effect)
+- Previous year: BARLEY (-20% half effect = -10%)
+- Total rotation bonus: +10%
+
+Example 2: Growing **WHEAT**
+- Current year: WHEAT (-20% full effect)
+- Previous year: WHEAT (-20% half effect = -10%)
+- Total rotation bonus: -30%
 
 ### Customization
 - All rotation multipliers can be modified in the `FieldRotation.xml` file within the modSettings folder
