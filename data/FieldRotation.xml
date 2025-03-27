@@ -118,9 +118,6 @@
             <predecessor fruitType="PARSNIP" multiplier="-0.10" />
         </rotation>
 
-        <rotation fruitType="GRASS">
-        </rotation>
-
         <rotation fruitType="SUGARCANE">
         </rotation>
 
