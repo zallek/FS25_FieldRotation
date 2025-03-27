@@ -11,7 +11,7 @@ end
 FieldState.new = Utils.overwrittenFunction(FieldState.new, FR_FieldState.new)
 
 function FR_FieldState:update(x, z)
-    --[[ 
+    --[[
     Annoyingly, FieldState is used for different purposes in the game
     1. Each Field has a FieldState to track the field's fruit, growth state, etc
        - These are flagged with isRealField = true

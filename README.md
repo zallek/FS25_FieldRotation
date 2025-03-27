@@ -1,14 +1,19 @@
 # FS25_FieldRotation
 
-BETA
-
 A Farming Simulator 25 mod that implements a comprehensive field rotation system to enhance crop management and yields.
+
+⚠️ ALPHA VERSION - This mod is currently in development and may contain bugs. Use at your own discretion.  Pleave leave bug reports or feedback.
 
 ## Features
 - Dynamic yield adjustments based on previous crops harvested on each field
 - Field HUD display showing recently harvested crops
 - Smart recommendations for optimal crop selection after harvest
 - Random field history generation upon initial installation
+
+<div align='center'>
+    <img src="screenshots/rotation_yield.jpg" style="width: 49%;">
+    <img src="screenshots/recommendation.jpg" style="width: 49%;">
+</div>
 
 ## Crop Rotation System
 
@@ -43,4 +48,3 @@ The mod implements a sophisticated crop rotation system where the yield of each 
 - Fallow field yield bonus system
 - Rotation bonus display when selecting crops with seeders/planters
 - In-game visualization of the rotation multiplier matrix
-

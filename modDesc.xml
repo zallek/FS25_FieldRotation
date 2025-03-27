@@ -7,14 +7,26 @@
     </title>
     <description>
         <en>
-            <![CDATA[ 
-                Field Rotation is a mod Farming Simulator 25 that allows you to rotate your fields.
-            ]]>
+        <![CDATA[
+            A Farming Simulator 25 mod that implements a comprehensive field rotation system to enhance crop management and yields.
+
+            ## Features
+            - Dynamic yield adjustments based on previous crops harvested on each field
+            - Field HUD display showing recently harvested crops
+            - Smart recommendations for optimal crop selection after harvest
+            - Random field history generation upon initial installation
+        ]]>
         </en>
         <fr>
-            <![CDATA[ 
-                Rotation de champ est un mod Farming Simulator 25 qui permet de faire tourner vos champs.
-            ]]>
+        <![CDATA[
+            Un mod Farming Simulator 25 qui implémente un système de rotation de champ complet pour améliorer la gestion et les rendements des cultures.
+
+            ## Fonctionnalités
+            - Ajustement dynamique des rendements en fonction des cultures récoltées sur chaque champ
+            - Affichage HUD du champ montrant les cultures récoltées récemment
+            - Recommandations optimales pour le choix des cultures après récolte
+            - Génération aléatoire de l'historique des champs lors de l'installation initiale
+        ]]>
         </fr>
     </description>
     <iconFilename>icon_FieldRotation.dds</iconFilename>
