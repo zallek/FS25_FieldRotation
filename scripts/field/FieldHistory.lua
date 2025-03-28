@@ -46,7 +46,8 @@ function FR_FieldHistory:update(fieldState)
         self:appendHistoryEntry(newEntry)
     end
 
-    if #self.historyEntries < 24 then
+    if self.historyEntries[1] ~= nil and self.historyEntries[1].generated == false and self.historyEntries[1]:getYearsOld() < 2 then
+        -- Random field history generation
         local success, backwardHistory = pcall(self.generateBackHistoryWithRandomFruitTypes, self, self.historyEntries[1], 2)
         if success then
             for _, entryValues in ipairs(backwardHistory) do

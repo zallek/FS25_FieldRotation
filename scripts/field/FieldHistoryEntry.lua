@@ -79,11 +79,11 @@ function FR_FieldHistoryEntry:getYearsOld()
 end
 
 function FR_FieldHistoryEntry:getYearsOldFactor()
-    return 2 ^ self:getYearsOld()
+    return 1 / (2 ^ self:getYearsOld())
 end
 
 function FR_FieldHistoryEntry:getRotationMultiplier(currentFruitTypeIndex)
     -- Return multipler between -1 and 1
     local rotationMultiplier = FieldRotation.fieldRotationSystem:getRotationMultiplier(currentFruitTypeIndex, self.fruitTypeIndex)
-    return rotationMultiplier / self:getYearsOldFactor()
+    return rotationMultiplier * self:getYearsOldFactor()
 end

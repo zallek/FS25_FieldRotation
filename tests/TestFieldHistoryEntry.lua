@@ -22,13 +22,13 @@ function TestFieldHistoryEntry:testGetDaysOldYieldFactor()
     luaunit.assertEquals(entry:getYearsOldFactor(1), 1)
 
     local entry = FR_FieldHistoryEntry.new():init({ monotonicDay = 18 })
-    luaunit.assertEquals(entry:getYearsOldFactor(1), 2)
+    luaunit.assertEquals(entry:getYearsOldFactor(1), 0.5)
 
     local entry = FR_FieldHistoryEntry.new():init({ monotonicDay = 7 })
-    luaunit.assertEquals(entry:getYearsOldFactor(1), 2)
+    luaunit.assertEquals(entry:getYearsOldFactor(1), 0.5)
 
     local entry = FR_FieldHistoryEntry.new():init({ monotonicDay = 6 })
-    luaunit.assertEquals(entry:getYearsOldFactor(1), 4)
+    luaunit.assertEquals(entry:getYearsOldFactor(1), 0.25)
 end
 
 function TestFieldHistoryEntry:testGetRotationMultiplier0()
