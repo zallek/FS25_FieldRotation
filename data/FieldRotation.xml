@@ -2,30 +2,58 @@
 <FS25_FieldRotation>
     <rotations>
         <!-- Field Rotation Matrix
-        Each crop can have multiple predecessor_effect entries:
-        - multiplier: yield multiplier effect from the predecessor crop
-            +0.20: Very good predecessor (e.g., legumes before cereals)
-            +0.10: Good predecessor (e.g., cereals before root crops)
-            -0.20: Bad predecessor (e.g., same crop family, disease carryover)
-            -0.10: Poor predecessor (e.g., nutrient competition)
-        If a predecessor is not listed, it's considered neutral (multiplier = 0)
+        multiplier: yield multiplier effect from the predecessor crop
+
+        Key Principles:
+        1. Disease Management:
+           - Avoid planting same crop family consecutively
+           - Legumes (SOYBEAN, PEA) break disease cycles
+           - Brassicas (CANOLA) should not follow each other
+           - Leafy vegetables (SPINACH) need disease-free soil
+        
+        2. Nutrient Management:
+           - Legumes fix nitrogen and benefit following crops
+           - Deep-rooted crops (POTATO, SUGARBEET) access different soil layers
+           - Heavy feeders (MAIZE) benefit from legume predecessors
+           - Leafy vegetables need high nitrogen levels
+        
+        3. Soil Structure:
+           - Root crops improve soil structure
+           - Grasses and cereals build organic matter
+           - Mix deep and shallow-rooted crops
+           - Cover crops (OILSEEDRADISH) improve soil health
+        
+        4. Weed Control:
+           - Different crops compete with weeds differently
+           - Alternating between broadleaf and grass crops
+           - Cover crops (OILSEEDRADISH) suppress weeds
+           - Dense crops (SPINACH) suppress weeds
+        
+        5. Crop Family Considerations:
+           - Cereals: WHEAT, BARLEY, OAT, MAIZE, SORGHUM
+           - Legumes: SOYBEAN, PEA, GREENBEAN
+           - Brassicas: CANOLA, OILSEEDRADISH
+           - Root Crops: POTATO, SUGARBEET, CARROT, PARSNIP, BEETROOT
+           - Leafy Vegetables: SPINACH
+           - Broadleaf: SUNFLOWER, COTTON
+           - Permanent: SUGARCANE, GRASS
 
         Note:
-        - Permanent crops (GRASS, MEADOW, SUGARCANE) can be maintained for multiple years without rotation.
-        - Root crops are divided into shallow (CARROT, PARSNIP) and deep (SUGARBEET, POTATO) rooted crops.
-        - Oilseed crops (CANOLA, SUNFLOWER) share similar diseases and should not follow each other.
-          - GRASS/MEADOW benefits depend on management and duration - mainly improves soil structure for
-      cereals and root crops.
-      -->
+        - Permanent crops (GRASS, SUGARCANE) can be maintained for multiple years without rotation
+        - Root crops are divided into shallow (CARROT, PARSNIP) and deep (SUGARBEET, POTATO) rooted crops
+        - Oilseed crops (CANOLA, SUNFLOWER) share similar diseases and should not follow each other
+        - GRASS benefits depend on management and duration - mainly improves soil structure
+        - Leafy vegetables benefit from nitrogen-rich soil after legumes
+        - Cover crops (OILSEEDRADISH) improve soil structure and suppress weeds
+        -->
         <rotation fruitType="WHEAT">
             <predecessor fruitType="WHEAT" multiplier="-0.20" />
             <predecessor fruitType="BARLEY" multiplier="-0.20" />
             <predecessor fruitType="OAT" multiplier="-0.20" />
-            <predecessor fruitType="MAIZE" multiplier="-0.20" />
+            <predecessor fruitType="MAIZE" multiplier="-0.15" />
             <predecessor fruitType="SOYBEAN" multiplier="0.20" />
             <predecessor fruitType="POTATO" multiplier="0.10" />
             <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
         </rotation>
 
         <rotation fruitType="BARLEY">
@@ -36,7 +64,17 @@
             <predecessor fruitType="SOYBEAN" multiplier="0.20" />
             <predecessor fruitType="POTATO" multiplier="0.10" />
             <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
+        </rotation>
+
+        <rotation fruitType="CANOLA">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="CANOLA" multiplier="-0.30" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
+            <predecessor fruitType="SUNFLOWER" multiplier="-0.20" />
+            <predecessor fruitType="COTTON" multiplier="-0.10" />
+            <predecessor fruitType="OILSEEDRADISH" multiplier="-0.30" />
         </rotation>
 
         <rotation fruitType="OAT">
@@ -46,38 +84,16 @@
             <predecessor fruitType="MAIZE" multiplier="-0.20" />
             <predecessor fruitType="SOYBEAN" multiplier="0.20" />
             <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-        </rotation>
-
-        <rotation fruitType="CANOLA">
-            <predecessor fruitType="WHEAT" multiplier="0.10" />
-            <predecessor fruitType="BARLEY" multiplier="0.10" />
-            <predecessor fruitType="OAT" multiplier="0.10" />
-            <predecessor fruitType="CANOLA" multiplier="-0.20" />
-            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="SUNFLOWER" multiplier="-0.20" />
-            <predecessor fruitType="COTTON" multiplier="-0.10" />
         </rotation>
 
         <rotation fruitType="MAIZE">
-            <predecessor fruitType="WHEAT" multiplier="-0.20" />
-            <predecessor fruitType="BARLEY" multiplier="-0.20" />
-            <predecessor fruitType="OAT" multiplier="-0.20" />
+            <predecessor fruitType="WHEAT" multiplier="-0.15" />
+            <predecessor fruitType="BARLEY" multiplier="-0.15" />
+            <predecessor fruitType="OAT" multiplier="-0.15" />
             <predecessor fruitType="MAIZE" multiplier="-0.20" />
-            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.25" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
             <predecessor fruitType="SORGHUM" multiplier="-0.20" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-        </rotation>
-
-        <rotation fruitType="SOYBEAN">
-            <predecessor fruitType="WHEAT" multiplier="0.10" />
-            <predecessor fruitType="BARLEY" multiplier="0.10" />
-            <predecessor fruitType="OAT" multiplier="0.10" />
-            <predecessor fruitType="MAIZE" multiplier="0.10" />
-            <predecessor fruitType="SOYBEAN" multiplier="-0.20" />
-            <predecessor fruitType="POTATO" multiplier="0.10" />
-            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
         </rotation>
 
         <rotation fruitType="SUNFLOWER">
@@ -88,19 +104,30 @@
             <predecessor fruitType="SUNFLOWER" multiplier="-0.20" />
             <predecessor fruitType="COTTON" multiplier="-0.10" />
         </rotation>
+        
+        <rotation fruitType="SOYBEAN">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="MAIZE" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="-0.30" />
+            <predecessor fruitType="PEA" multiplier="-0.30" />
+            <predecessor fruitType="GREENBEAN" multiplier="-0.30" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
+        </rotation>
 
         <rotation fruitType="POTATO">
             <predecessor fruitType="WHEAT" multiplier="0.10" />
             <predecessor fruitType="BARLEY" multiplier="0.10" />
             <predecessor fruitType="OAT" multiplier="0.10" />
             <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="POTATO" multiplier="-0.20" />
-            <predecessor fruitType="SUGARBEET" multiplier="-0.20" />
-            <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-            <predecessor fruitType="CARROT" multiplier="-0.10" />
-            <predecessor fruitType="BEETROOT" multiplier="-0.10" />
-            <predecessor fruitType="PARSNIP" multiplier="-0.10" />
+            <predecessor fruitType="POTATO" multiplier="-0.30" />
+            <predecessor fruitType="SUGARBEET" multiplier="-0.30" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
+            <predecessor fruitType="CARROT" multiplier="-0.20" />
+            <predecessor fruitType="BEETROOT" multiplier="-0.20" />
+            <predecessor fruitType="PARSNIP" multiplier="-0.20" />
         </rotation>
 
         <rotation fruitType="SUGARBEET">
@@ -109,53 +136,42 @@
             <predecessor fruitType="OAT" multiplier="0.10" />
             <predecessor fruitType="MAIZE" multiplier="-0.20" />
             <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="POTATO" multiplier="-0.20" />
-            <predecessor fruitType="SUGARBEET" multiplier="-0.20" />
-            <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-            <predecessor fruitType="CARROT" multiplier="-0.10" />
-            <predecessor fruitType="BEETROOT" multiplier="-0.10" />
-            <predecessor fruitType="PARSNIP" multiplier="-0.10" />
+            <predecessor fruitType="POTATO" multiplier="-0.30" />
+            <predecessor fruitType="SUGARBEET" multiplier="-0.30" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
+            <predecessor fruitType="CARROT" multiplier="-0.30" />
+            <predecessor fruitType="BEETROOT" multiplier="-0.30" />
+            <predecessor fruitType="PARSNIP" multiplier="-0.30" />
         </rotation>
 
         <rotation fruitType="SUGARCANE">
+            <predecessor fruitType="SOYBEAN" multiplier="0.25" />
+            <predecessor fruitType="PEA" multiplier="0.25" />
+            <predecessor fruitType="GREENBEAN" multiplier="0.25" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="-0.20" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
+            <predecessor fruitType="MAIZE" multiplier="0.10" />
         </rotation>
 
         <rotation fruitType="COTTON">
             <predecessor fruitType="WHEAT" multiplier="0.10" />
             <predecessor fruitType="MAIZE" multiplier="0.10" />
-            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.25" />
             <predecessor fruitType="SUNFLOWER" multiplier="-0.10" />
             <predecessor fruitType="CANOLA" multiplier="-0.10" />
-            <predecessor fruitType="COTTON" multiplier="-0.20" />
+            <predecessor fruitType="COTTON" multiplier="-0.30" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
         </rotation>
 
         <rotation fruitType="SORGHUM">
-            <predecessor fruitType="WHEAT" multiplier="-0.20" />
-            <predecessor fruitType="BARLEY" multiplier="-0.20" />
-            <predecessor fruitType="OAT" multiplier="-0.20" />
+            <predecessor fruitType="WHEAT" multiplier="-0.15" />
+            <predecessor fruitType="BARLEY" multiplier="-0.15" />
+            <predecessor fruitType="OAT" multiplier="-0.15" />
             <predecessor fruitType="MAIZE" multiplier="-0.20" />
-            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.25" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
             <predecessor fruitType="SORGHUM" multiplier="-0.20" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-        </rotation>
-
-        <rotation fruitType="MEADOW">
-        </rotation>
-
-        <rotation fruitType="CARROT">
-            <predecessor fruitType="WHEAT" multiplier="0.10" />
-            <predecessor fruitType="BARLEY" multiplier="0.10" />
-            <predecessor fruitType="OAT" multiplier="0.10" />
-            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
-            <predecessor fruitType="POTATO" multiplier="-0.10" />
-            <predecessor fruitType="SUGARBEET" multiplier="-0.10" />
-            <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
-            <predecessor fruitType="CARROT" multiplier="-0.20" />
-            <predecessor fruitType="BEETROOT" multiplier="-0.10" />
-            <predecessor fruitType="PARSNIP" multiplier="-0.20" />
         </rotation>
 
         <rotation fruitType="BEETROOT">
@@ -166,10 +182,22 @@
             <predecessor fruitType="POTATO" multiplier="-0.10" />
             <predecessor fruitType="SUGARBEET" multiplier="-0.20" />
             <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
             <predecessor fruitType="CARROT" multiplier="-0.10" />
             <predecessor fruitType="BEETROOT" multiplier="-0.20" />
             <predecessor fruitType="PARSNIP" multiplier="-0.10" />
+        </rotation>
+
+        <rotation fruitType="CARROT">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
+            <predecessor fruitType="POTATO" multiplier="-0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="-0.10" />
+            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="CARROT" multiplier="-0.20" />
+            <predecessor fruitType="BEETROOT" multiplier="-0.10" />
+            <predecessor fruitType="PARSNIP" multiplier="-0.20" />
         </rotation>
 
         <rotation fruitType="PARSNIP">
@@ -180,10 +208,67 @@
             <predecessor fruitType="POTATO" multiplier="-0.10" />
             <predecessor fruitType="SUGARBEET" multiplier="-0.10" />
             <predecessor fruitType="GRASS" multiplier="0.10" />
-            <predecessor fruitType="MEADOW" multiplier="0.10" />
             <predecessor fruitType="CARROT" multiplier="-0.20" />
             <predecessor fruitType="BEETROOT" multiplier="-0.10" />
             <predecessor fruitType="PARSNIP" multiplier="-0.20" />
+        </rotation>
+
+        <rotation fruitType="GREENBEAN">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="MAIZE" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="-0.20" />
+            <predecessor fruitType="PEA" multiplier="-0.20" />
+            <predecessor fruitType="GREENBEAN" multiplier="-0.20" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
+            <predecessor fruitType="SUNFLOWER" multiplier="0.10" />
+            <predecessor fruitType="COTTON" multiplier="0.10" />
+        </rotation>
+
+        <rotation fruitType="PEA">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="MAIZE" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="-0.20" />
+            <predecessor fruitType="GREENBEAN" multiplier="-0.20" />
+            <predecessor fruitType="PEA" multiplier="-0.20" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
+            <predecessor fruitType="SUNFLOWER" multiplier="0.10" />
+            <predecessor fruitType="COTTON" multiplier="0.10" />
+        </rotation>
+
+        <rotation fruitType="SPINACH">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.25" />
+            <predecessor fruitType="PEA" multiplier="0.25" />
+            <predecessor fruitType="GREENBEAN" multiplier="0.25" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="SPINACH" multiplier="-0.30" />
+            <predecessor fruitType="GRASS" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
+            <predecessor fruitType="OILSEEDRADISH" multiplier="0.15" />
+        </rotation>
+
+        <rotation fruitType="OILSEEDRADISH">
+            <predecessor fruitType="WHEAT" multiplier="0.10" />
+            <predecessor fruitType="BARLEY" multiplier="0.10" />
+            <predecessor fruitType="OAT" multiplier="0.10" />
+            <predecessor fruitType="SOYBEAN" multiplier="0.20" />
+            <predecessor fruitType="CANOLA" multiplier="-0.30" />
+            <predecessor fruitType="OILSEEDRADISH" multiplier="-0.30" />
+            <predecessor fruitType="GRASS" multiplier="0.15" />
+            <predecessor fruitType="MAIZE" multiplier="0.15" />
+            <predecessor fruitType="POTATO" multiplier="0.10" />
+            <predecessor fruitType="SUGARBEET" multiplier="0.10" />
+            <predecessor fruitType="SUNFLOWER" multiplier="-0.20" />
         </rotation>
     </rotations>
 </FS25_FieldRotation>
